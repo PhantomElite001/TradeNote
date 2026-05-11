@@ -1,35 +1,19 @@
-const UserModel = require("./models/User.js")
-const validator = require("validator");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
-dotenv.config()
+import { updateName } from "./models/User.js";
+bcrypt = require("bcrypt");
+import jwt from "jsonwebtoken";
+import { config } from "dotenv";
+import login from './auth/login';
+import { register } from "../auth/register.js";
+config()
 
 
 
 // Create a new User
-exports.createUser= async (req,res)=>{
+export async function createUser(req,res){
     try {
         const {name,email,password}=req.body
-        if (!name || !email || !password) {
-            return res.status(400).json({message:'missing fields'})
-        }
-        if (!validator.isEmail(email)){
-            return res.status(400).json({message:'invalid email format'})
-        }
-        if (password.length<8) {
-            return res.status(400).json({message:'password too short'})
-            
-        }
-        if (await UserModel.checkUser(email)){
-            return res.status(409).json({message:"this email already exists"})
-        }
-        const hashedpass=await bcrypt.hash(password,11)
-        if(!hashedpass){
-            return res.status(500).json({message:'hashing failed'})
-        }
-        await UserModel.newUser({name,email,password:hashedpass})
-        return res.status(201).json({message:'user created successfully'})
+        register({name,email,password})
+        res.status(201).json({message:"user creted sucessfully"})
         
         
     } catch (e) {
@@ -37,35 +21,27 @@ exports.createUser= async (req,res)=>{
         return res.status(500).json({message:"couldn't create user",
             err:'internal server error'
         })
-        
+    }    
     }
+export async function login(req,res){
+    const {email,password}=req.body
+    login({email,password})
 }
-exports.login= async (req,res)=>{
+export async function updateName(req,res){
+    const token =req.headers.authorisation
+    decoded=jwt.verify(token,process.env.JWT_SECRET)
+    const {name}=req.body
+    if (!name) {
+        return res.status(400).json({message:"missing fields"})
+    }
     try {
-        const {email,password}=req.body
-        if (!email || !password) {
-            return res.status(401).json({message:"missing fields"})
-        }
-        if (!validator.isEmail(email)){
-            return res.status(400).json({message:'invalid email format'})
-        }
-        if (password.length<8) {
-            return res.status(400).json({message:'password too short'})
-        }
-        if(!(await UserModel.checkUser(email))){
-            return res.status(409).json({message="User does not exist"})
-        }
-        const hashedpass=UserModel.getPassword(email)
-        const valid = bcrypt.compare(password,hashedpass)
-        if(!valid){
-            return res.status(401).json({message:"wrong password"})
-        }
-        const id = UserModel.getId(email)
-        const token=jwt.sign({email,id},process.env.JWT_SECRET)
-        } catch (e) {
-        
+        await UserModel.updateName({id:decoded.id,newName:name})
+        return res.status(200).json({message:"name updated successfully"})
+    } catch (e) {
+        console.error('updateName error:',e)
+        return res.status(500).json({message:"couldn't update name",
+            err:'internal server error'
+        })
     }
-}
-exports.updateName=async (req,res)=>{
-    
+
 }
