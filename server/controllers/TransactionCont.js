@@ -7,7 +7,7 @@ export async function createTransaction(req,res) {
     decoded=jwt.verify(token, process.env.JWT_SECRET)
     user_id=decoded.id
     try {
-        const customer_id=await Customer.getCustomerId({name:customer_name,phone})
+        const customer_id=await Customer.getCustomerId(username:customer_name,phone})
         if (!customer_id) {
             return res.status(404).json({message:"customer not found"})
         }  
@@ -24,7 +24,7 @@ export async function showHistory(req,res) {
     decoded=jwt.verify(token, process.env.JWT_SECRET)
     user_id=decoded.id
     try {
-        const customer_id=await Customer.getCustomerId({name:customer_name,phone})
+        const customer_id=await Customer.getCustomerId(username:customer_name,phone})
         if (!customer_id) {
             return res.status(404).json({message:"customer not found"})
         }

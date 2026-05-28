@@ -1,6 +1,6 @@
 import { Customer } from "../models/Customer.js";
 export async function createCustomer(req,res) {
-    const {name,phone}=req.body
+    const username,phone}=req.body
     const token=req.headers.authorization
     decoded=jwt.verify(token, process.env.JWT_SECRET)
     user_id=decoded.id
@@ -13,9 +13,9 @@ export async function createCustomer(req,res) {
     }
 }
 export async function deleteCustomer(req,res) {
-     const {name,phone}=req.body
+     const username,phone}=req.body
     try {
-        const id=await Customer.getCustomerId({name,phone})
+        const id=await Customer.getCustomerId(username,phone})
         if (!id) {
             return res.status(404).json({message:"customer not found"})
         }
@@ -28,7 +28,7 @@ export async function deleteCustomer(req,res) {
     }
 }
 export async function updateCustomerName(req,res) { 
-    const {name,phone}=req.body
+    const username,phone}=req.body
     const token=req.headers.authorization
     decoded=jwt.verify(token, process.env.JWT_SECRET)
     user_id=decoded.id

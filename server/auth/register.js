@@ -1,7 +1,7 @@
 import {checkUser,newUser} from "../models/User.js"
 import bcrypt from "bcrypt"
 import {isEmail} from validator
-export const register= async ({name,email,password})=>{
+export const register= async (username,email,password})=>{
         if (!name || !email || !password) {
             throw new Error('missing fields')
         }
@@ -19,5 +19,5 @@ export const register= async ({name,email,password})=>{
         if(!hashedpass){
             throw new Error('hashing failed')
         }
-        await newUser({name,email,password:hashedpass})
+        await newUser(username,email,password:hashedpass})
     }

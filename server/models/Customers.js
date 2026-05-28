@@ -1,7 +1,7 @@
 import db from "./config/db"
 import { updateName } from "./User"
 export const methods ={
-    async getCustomerId({name,phone}){
+    async getCustomerId(username,phone}){
         db.query("SELECT id from Customers where name=?",[name])
     },
     async createCustomer({user_id,name,phone}){

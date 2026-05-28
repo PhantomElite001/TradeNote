@@ -13,7 +13,7 @@ const methods={
         const [hashedpass]= await db.query('SELECT password FROM Users WHERE email=?',[email])
         return hashedpass
     },
-    async newUser({name,email,password}){
+    async newUser(username,email,password}){
         await db.query("INSERT INTO Users(name,email,password) VALUES(?,?,?)",[name,email,password])
     },
     async updateName({id,newName}){
