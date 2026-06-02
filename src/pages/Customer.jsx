@@ -21,7 +21,9 @@ export default function Customer(id) {
                             <li key={transaction.id}>{transaction.description} - {transaction.amount}</li>
                         ))}
                     </ul>
-                    <button onClick={}>View Transactions</button>
+                    <button onClick={
+                        navigate("/transactions")
+                    }>View Transactions</button>
                 </div>
               
                 <div className="new-trade"></div>
@@ -33,6 +35,6 @@ export default function Customer(id) {
                 <button>Manage Credits</button>
                 <button>Manage Debits</button>
             </div>
-        </div>
+    )
     
-                    )}
+                    }
