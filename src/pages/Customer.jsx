@@ -1,5 +1,7 @@
 import React from "react";
-import {useNavigate}="react-router-dom";
+import { useState } from "react";
+import { Outlet } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 export default function Customer(id) {
     const navigate = useNavigate();
 
@@ -22,8 +24,15 @@ export default function Customer(id) {
                     <button onClick={}>View Transactions</button>
                 </div>
               
-                
+                <div className="new-trade"></div>
+                    <h3>New Trade</h3>
+                    <p>Initiate a new trade for this customer.</p>
+                    <button onClick={() => navigate("/add-trade")}>Add Trade</button>
+                    <Outlet />
+                </div>
                 <button>Manage Credits</button>
                 <button>Manage Debits</button>
             </div>
         </div>
+    
+                    )}
