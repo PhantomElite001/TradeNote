@@ -24,4 +24,4 @@ export default function Receipt({tradeDetails}){
 
                 </div>
             </div>
-        )
+        )}
