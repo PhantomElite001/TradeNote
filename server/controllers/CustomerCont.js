@@ -1,9 +1,11 @@
+import process from "node:process";
 import { Customer } from "../models/Customer.js";
+import jwt from "jsonwebtoken";
 export async function createCustomer(req,res) {
-    const {username,phone}=req.body
+    const {name,phone}=req.body
     const token=req.headers.authorization
-    decoded=jwt.verify(token, process.env.JWT_SECRET)
-    user_id=decoded.id
+    const decoded= jwt.verify(token, process.env.JWT_SECRET)
+    const user_id=decoded.id
     try {
         await Customer.createCustomer({user_id,name,phone})
         return res.status(201).json({message:"customer created"})
@@ -28,10 +30,10 @@ export async function deleteCustomer(req,res) {
     }
 }
 export async function updateCustomerName(req,res) { 
-    const {username,phone}=req.body
+    const {name,}=req.body
     const token=req.headers.authorization
-    decoded=jwt.verify(token, process.env.JWT_SECRET)
-    user_id=decoded.id
+    const decoded=jwt.verify(token, process.env.JWT_SECRET)
+    const user_id=decoded.id
     try {
         await Customer.updateName({user_id,name})
         return res.status(200).json({message:"customer name updated"})

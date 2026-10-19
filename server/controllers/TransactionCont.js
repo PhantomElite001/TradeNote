@@ -1,11 +1,11 @@
 import {Transaction} from './models/Transactions'
 import {Customer} from './models/Customers'
-import jwt from ("jsonwebtoken")
+import jwt from "jsonwebtoken"
 export async function createTransaction(req,res) {
     const {customer_name,phone,desc,type,amount,status}=req.body
     const token=req.headers.authorization
-    decoded=jwt.verify(token, process.env.JWT_SECRET)
-    user_id=decoded.id
+    const decoded=jwt.verify(token, process.env.JWT_SECRET)
+    const user_id=decoded.id
     try {
         const customer_id=await Customer.getCustomerId({username:customer_name,phone})
         if (!customer_id) {
@@ -21,8 +21,8 @@ export async function createTransaction(req,res) {
 export async function showHistory(req,res) {
     const {customer_name,phone}=req.body
     const token=req.headers.authorization
-    decoded=jwt.verify(token, process.env.JWT_SECRET)
-    user_id=decoded.id
+    const decoded=jwt.verify(token, process.env.JWT_SECRET)
+    const user_id=decoded.id
     try {
         const customer_id=await Customer.getCustomerId({username:customer_name,phone})
         if (!customer_id) {

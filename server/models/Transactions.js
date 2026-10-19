@@ -1,5 +1,5 @@
 import db from "./config/db"
-export const methods={
+export const transactions={
     async newTrans({user_id,customer_id,desc,type,amount,status}){
         await db.query("INSERT INTO Transactions(user_id,customer_id,desc,type,amount,status) VALUES(?,?,?,?,?,?)"[user_id,customer_id,desc,type,amount,status])
 
