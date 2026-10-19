@@ -17,17 +17,22 @@
   "main": "eslint.config.js",
   "scripts": {
     "dev": "vite",
+    "start:server": "node server/index.js",
+    "dev:all": "concurrently \"npm run start:server\" \"npm run dev\"",
+    "seed": "node server/seed.js",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
     "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "mysql2": "^3.22.1",
+    "mysql2": "^3.22.5",
     "node-fetch": "^3.3.2",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "react-router-dom": "^7.18.0",
     "validator": "^13.15.35"
   },
   "devDependencies": {
@@ -38,6 +43,7 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
     "babel-plugin-react-compiler": "^1.0.0",
+    "concurrently": "^8.0.1",
     "eslint": "^9.39.4",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",
