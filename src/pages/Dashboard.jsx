@@ -4,6 +4,7 @@ import Actioncard from "../assets/shared/Actioncard";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 export default function Dashboard(statvalues) {
+    
     return (
         <div className="dashboard-container">
             <h2>Dashboard</h2>

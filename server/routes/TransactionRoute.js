@@ -5,5 +5,5 @@ const router=express.Router()
 router.use(authMiddleware)
 router.post('/create',createTransaction)
 router.post('/view',showHistory)
-router
+
 export default router

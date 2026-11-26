@@ -1,5 +1,6 @@
 import process from "node:process";
 import { Customer } from "../models/Customer.js";
+import {transaction} from "models/Transactions.js";
 import jwt from "jsonwebtoken";
 export async function createCustomer(req,res) {
     const {name,phone}=req.body
@@ -7,8 +8,10 @@ export async function createCustomer(req,res) {
     const decoded= jwt.verify(token, process.env.JWT_SECRET)
     const user_id=decoded.id
     try {
-        await Customer.createCustomer({user_id,name,phone})
+        const customer_id=await Customer.createCustomer({user_id,name,phone})
+        transactions.newTrans({user_id,customer_id,"creation",'creation',null})
         return res.status(201).json({message:"customer created"})
+
     } catch (error) {
         console.log('customer creation error:',error)
         return res.status(500).json({err:"internal server error"})
